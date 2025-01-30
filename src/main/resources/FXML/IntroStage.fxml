@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.Main">
+    <center>
+
+        <VBox alignment="CENTER" prefHeight="169.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <Label alignment="CENTER" contentDisplay="CENTER" graphicTextGap="5.0" layoutX="170.0" layoutY="107.0" prefHeight="62.0" prefWidth="438.0" text="Tennissembly" textFill="#12ff00">
+                <font>
+                    <Font name="Snap ITC" size="48.0" />
+                </font>
+                <effect>
+                    <DropShadow height="23.91" radius="8.5425" spread="0.99" width="12.26" />
+                </effect>
+                <cursor>
+                    <Cursor fx:constant="TEXT" />
+                </cursor>
+            </Label>
+            <Label alignment="CENTER" prefHeight="26.0" prefWidth="119.0" text="Narges Kari" textAlignment="CENTER" textFill="#08f310">
+                <font>
+                    <Font name="Comic Sans MS" size="18.0" />
+                </font>
+                <effect>
+                    <DropShadow blurType="ONE_PASS_BOX" spread="0.88" />
+                </effect>
+            </Label>
+            <Label alignment="CENTER" prefHeight="26.0" prefWidth="392.0" text="Computer Structure and Machine Language" textAlignment="CENTER" textFill="#08f310">
+                <font>
+                    <Font name="Comic Sans MS" size="14.0" />
+                </font>
+                <effect>
+                    <DropShadow blurType="ONE_PASS_BOX" spread="0.88" />
+                </effect>
+            </Label>
+            <Label alignment="CENTER" prefHeight="26.0" prefWidth="119.0" text="2025" textAlignment="CENTER" textFill="#08f310">
+                <font>
+                    <Font name="Comic Sans MS" size="14.0" />
+                </font>
+                <effect>
+                    <DropShadow blurType="ONE_PASS_BOX" spread="0.88" />
+                </effect>
+            </Label>
+            <ImageView fitHeight="40.0" fitWidth="40.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                <cursor>
+                    <Cursor fx:constant="DEFAULT" />
+                </cursor>
+                <Image url="@../IMAGES/sharifLogo.jpg" />
+            <effect>
+               <InnerShadow>
+                  <color>
+                     <Color red="0.03333333507180214" green="1.0" />
+                  </color></InnerShadow>
+            </effect>
+            </ImageView>
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+
+            <cursor>
+                <Cursor fx:constant="DEFAULT" />
+            </cursor>
+        </VBox>
+    </center>
+    <background>
+
+    </background>
+
+</BorderPane>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ProfileMenuController">
+    <Label layoutX="20.0" layoutY="36.0" onMouseClicked="#back" prefHeight="25.0" prefWidth="53.0" text="Back"
+           textFill="#00ff26">
+        <font>
+            <Font name="Comic Sans MS" size="18.0"/>
+        </font>
+        <effect>
+            <DropShadow blurType="ONE_PASS_BOX" spread="0.88"/>
+        </effect>
+    </Label>
+    <Label layoutX="130.0" layoutY="329.0" onMouseClicked="#goToAvatarMenu" prefHeight="25.0" prefWidth="132.0"
+           text="🔴 Avatar Menu" textFill="#00ff26">
+        <font>
+            <Font name="Comic Sans MS" size="18.0"/>
+        </font>
+        <effect>
+            <DropShadow blurType="ONE_PASS_BOX" spread="0.88"/>
+        </effect>
+    </Label>
+    <Label layoutX="130.0" layoutY="381.0" onMouseClicked="#logout" prefHeight="25.0" prefWidth="95.0" text="🔴 Logout"
+           textFill="#00ff26">
+        <font>
+            <Font name="Comic Sans MS" size="18.0"/>
+        </font>
+        <effect>
+            <DropShadow blurType="ONE_PASS_BOX" spread="0.88"/>
+        </effect>
+    </Label>
+    <Label layoutX="501.0" layoutY="328.0" onMouseClicked="#deleteAccount" prefHeight="25.0" prefWidth="170.0"
+           text="🔴 Delete Account" textFill="#00ff26">
+        <font>
+            <Font name="Comic Sans MS" size="18.0"/>
+        </font>
+        <effect>
+            <DropShadow blurType="ONE_PASS_BOX" spread="0.88"/>
+        </effect>
+    </Label>
+    <TextField fx:id="newName" layoutX="309.0" layoutY="328.0" prefHeight="25.0" prefWidth="107.0" text="New Name?!"/>
+    <TextField fx:id="newPassword" layoutX="309.0" layoutY="368.0" prefHeight="25.0" prefWidth="107.0"
+               text="New Password?!"/>
+    <Button layoutX="413.0" layoutY="328.0" mnemonicParsing="false" onMouseClicked="#changeUsername" prefHeight="25.0"
+            prefWidth="59.0" text="Set"/>
+    <Button layoutX="413.0" layoutY="368.0" mnemonicParsing="false" onMouseClicked="#changePassword" prefHeight="25.0"
+            prefWidth="59.0" text="Set"/>
+
+
+</AnchorPane>

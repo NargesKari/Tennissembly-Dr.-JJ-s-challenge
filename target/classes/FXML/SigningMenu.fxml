@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.SigningMenu">
+    <children>
+        <VBox alignment="CENTER" layoutX="301.0" layoutY="70.0" prefHeight="360.0" prefWidth="198.0" spacing="10.0">
+            <children>
+                <Label fx:id="welcomeText" alignment="CENTER" prefHeight="17.0" prefWidth="185.0" text="Welcome"
+                       textAlignment="CENTER" textFill="#eaff00">
+                    <font>
+                        <Font name="Comic Sans MS Bold" size="18.0"/>
+                    </font>
+                    <effect>
+                        <DropShadow height="25.37" radius="14.0075" spread="0.49" width="32.66"/>
+                    </effect>
+                </Label>
+                <TextField fx:id="username" alignment="CENTER" prefHeight="25.0" prefWidth="223.0"
+                           promptText="Username"/>
+                <PasswordField fx:id="password" alignment="CENTER" promptText="password"/>
+                <HBox prefHeight="36.0" prefWidth="33.0">
+                    <children>
+                        <Button mnemonicParsing="false" onMouseClicked="#register" textFill="#fffb00">
+                            <effect>
+                                <InnerShadow/>
+                            </effect>
+                            <graphic>
+                                <Label text="Sign Up" textAlignment="CENTER" textFill="#eeff00">
+                                    <font>
+                                        <Font name="Comic Sans MS Bold" size="12.0"/>
+                                    </font>
+                                    <effect>
+                                        <DropShadow height="31.93" radius="23.295" spread="0.68" width="63.25"/>
+                                    </effect>
+                                </Label>
+                            </graphic>
+                        </Button>
+                        <Label text="                        "/>
+                        <Button mnemonicParsing="false" onMouseClicked="#login" textFill="#fffb00">
+                            <effect>
+                                <InnerShadow/>
+                            </effect>
+                            <graphic>
+                                <Label text="Sign In" textAlignment="CENTER" textFill="#eeff00">
+                                    <font>
+                                        <Font name="Comic Sans MS Bold" size="12.0"/>
+                                    </font>
+                                    <effect>
+                                        <DropShadow height="31.93" radius="23.295" spread="0.68" width="63.25"/>
+                                    </effect>
+                                </Label>
+                            </graphic>
+                        </Button>
+                    </children>
+                </HBox>
+                <Button mnemonicParsing="false" onMouseClicked="#loginAsGuest" textFill="#fffb00">
+                    <effect>
+                        <InnerShadow/>
+                    </effect>
+                    <graphic>
+                        <Label prefHeight="18.0" prefWidth="83.0" text="Login as Gust" textAlignment="CENTER"
+                               textFill="#eeff00">
+                            <font>
+                                <Font name="Comic Sans MS Bold" size="12.0"/>
+                            </font>
+                            <effect>
+                                <DropShadow height="31.93" radius="23.295" spread="0.68" width="63.25"/>
+                            </effect>
+                        </Label>
+                    </graphic>
+                </Button>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

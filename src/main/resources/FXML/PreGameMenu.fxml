@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.text.Font?>
+<BorderPane fx:controller="controller.PregameMenuController" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" >
+    <center>
+        <VBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <Label alignment="CENTER"  text="Choose a racket!" textAlignment="CENTER" textFill="#08f310">
+                <font>
+                    <Font name="Comic Sans MS" size="19.0" />
+                </font>
+                <effect>
+                    <DropShadow blurType="ONE_PASS_BOX" spread="0.88" />
+                </effect>
+            </Label>
+            <HBox prefHeight="500" alignment="CENTER" BorderPane.alignment="CENTER">
+                <effect>
+               <DropShadow />
+                </effect>
+                <ImageView fitHeight="100.0" fitWidth="50.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" fx:id="racket1">
+                    <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                    </cursor>
+                    <Image url="@../IMAGES/racket1.jpg" />
+                </ImageView>
+                <ImageView fitHeight="100.0" fitWidth="50.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+                    <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                    </cursor>
+                    <Image url="@../IMAGES/racket2.jpg" />
+                </ImageView>
+                <ImageView fitHeight="100.0" fitWidth="50.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" >
+                    <cursor>
+                        <Cursor fx:constant="DEFAULT" />
+                    </cursor>
+                    <Image url="@../IMAGES/racket3.jpg" />
+                </ImageView>
+            </HBox>
+            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="140.0" prefWidth="138.0" text="START" onMouseClicked="#startGame">
+                <font>
+                    <Font name="ROGFonts-Regular" size="12.0" />
+                </font></Button>
+        </VBox>
+    </center>
+</BorderPane>

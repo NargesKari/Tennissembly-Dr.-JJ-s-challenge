@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<BorderPane  xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.MainMenu">
+   <center>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <Button alignment="CENTER" mnemonicParsing="false" prefHeight="140.0" prefWidth="138.0" text="START" onMouseClicked="#startNewGame">
+            <font>
+               <Font name="ROGFonts-Regular" size="12.0" />
+            </font></Button>
+      </HBox>
+   </center>
+</BorderPane>
