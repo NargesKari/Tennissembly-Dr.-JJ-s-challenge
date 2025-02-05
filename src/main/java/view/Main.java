@@ -1,19 +1,19 @@
 package view;
 
-import controller.SettingMenuController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.PaneDesigner;
 
+import java.util.Objects;
+
 public class Main extends Application {
     private Pane root;
-    public static Stage stage;
-
 
     public static void main(String[] args) {
         launch(args);
@@ -21,21 +21,21 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Main.stage = stage;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/FXML/IntroStage.fxml"));
         root = fxmlLoader.load();
-        PaneDesigner.setUpPaneSettings(root, stage,"/IMAGES/firstPage.gif", "");
+        PaneDesigner.setUpPaneSettings(root, stage, "/IMAGES/firstPage.gif");
         stage.setResizable(true);
         stage.setWidth(1300);
         stage.setHeight(700);
         stage.setMinHeight(400);
         stage.setMinWidth(600);
         stage.show();
-//        SettingMenuController.playMusic();
+        stage.setTitle("Tennissembly");
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/IMAGES/logo.png")).toExternalForm()));
         Timeline timeline = new Timeline();
-        KeyFrame keyFrame = new KeyFrame(Duration.seconds(2.6), event -> {
+        KeyFrame keyFrame = new KeyFrame(Duration.seconds(3), event -> {
             try {
-                new MainMenu().start(Main.stage);
+                new PreGameMenu().start(stage);
             } catch (Exception e) {
                 e.printStackTrace();
             }

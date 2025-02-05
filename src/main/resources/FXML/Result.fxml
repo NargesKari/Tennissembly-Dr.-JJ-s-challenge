@@ -2,51 +2,54 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="250.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
-    <Label layoutX="14.0" layoutY="14.0" onMouseClicked="#back" prefHeight="25.0" prefWidth="53.0" text="Back"
-           textFill="#00ff26">
-        <font>
-            <Font name="Comic Sans MS" size="18.0"/>
-        </font>
-        <effect>
-            <DropShadow blurType="ONE_PASS_BOX" spread="0.88"/>
-        </effect>
-    </Label>
-    <Label layoutX="213.0" layoutY="194.0" text="KILL :" textFill="WHITE">
-        <font>
-            <Font name="Comic Sans MS" size="12.0"/>
-        </font>
-        <effect>
-            <DropShadow height="38.85" radius="19.197499999999998" spread="0.8" width="39.94"/>
-        </effect>
-    </Label>
-    <Label fx:id="kill" layoutX="259.0" layoutY="194.0" text="0" textFill="WHITE">
-        <font>
-            <Font name="Comic Sans MS" size="12.0"/>
-        </font>
-        <effect>
-            <DropShadow height="37.75" radius="18.9225" spread="0.87" width="39.94"/>
-        </effect>
-    </Label>
-    <Label layoutX="173.0" layoutY="218.0" text="accuracy :" textFill="WHITE">
-        <font>
-            <Font name="Comic Sans MS" size="12.0"/>
-        </font>
-        <effect>
-            <DropShadow height="38.85" radius="19.197499999999998" spread="0.8" width="39.94"/>
-        </effect>
-    </Label>
-    <Label fx:id="accuracy" layoutX="244.0" layoutY="218.0" text="0" textFill="WHITE">
-        <font>
-            <Font name="Comic Sans MS" size="12.0"/>
-        </font>
-        <effect>
-            <DropShadow height="37.75" radius="18.9225" spread="0.87" width="39.94"/>
-        </effect>
-    </Label>
-
-</AnchorPane>
+<BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ResultPageController">
+    <center>
+        <VBox alignment="CENTER" spacing="20" BorderPane.alignment="CENTER">
+            <Label fx:id="time" alignment="CENTER" text="00:00" textAlignment="CENTER" textFill="#7debcd">
+                <font>
+                    <Font name="Comic Sans MS" size="35.0" />
+                </font>
+                <effect>
+                    <DropShadow blurType="ONE_PASS_BOX" spread="0.88" />
+                </effect>
+            </Label>
+            <Label fx:id="winner" alignment="CENTER" text="wines" textAlignment="CENTER" textFill="00A87E">
+                <font>
+                    <Font name="Comic Sans MS" size="40.0" />
+                </font>
+                <effect>
+                    <DropShadow blurType="ONE_PASS_BOX" spread="0.88" />
+                </effect>
+            </Label>
+            <HBox fx:id="scoreBox" alignment="CENTER">
+                <Label fx:id="score1" alignment="CENTER" text="wines" textAlignment="CENTER" textFill="#5cd5e8">
+                    <font>
+                        <Font name="Comic Sans MS" size="35.0" />
+                    </font>
+                    <effect>
+                        <DropShadow blurType="ONE_PASS_BOX" spread="0.88" />
+                    </effect>
+                </Label>
+                <ImageView fitHeight="91.0" fitWidth="138.0">
+                    <Image url="@../IMAGES/VS.png" />
+                </ImageView>
+                <Label fx:id="score2" alignment="CENTER" text="wines" textAlignment="CENTER" textFill="#e57aa8">
+                    <font>
+                        <Font name="Comic Sans MS" size="35.0" />
+                    </font>
+                    <effect>
+                        <DropShadow blurType="ONE_PASS_BOX" spread="0.88" />
+                    </effect>
+                </Label>
+            </HBox>
+            <Button onMouseClicked="#back" prefHeight="70.0" prefWidth="70.0" text="Back" />
+            <effect>
+                <DropShadow height="23.55" radius="11.365" spread="0.3" width="23.91" />
+            </effect>
+        </VBox>
+    </center>
+</BorderPane>

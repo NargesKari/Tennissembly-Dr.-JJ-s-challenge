@@ -14,7 +14,7 @@ public class Game {
         this.court = court;
         ball = new Ball(
                 court.xProperty().get() + (court.getWidth() / 2),
-                court.yProperty().get() + (court.getHeight()),
+                court.yProperty().get() + (court.getHeight()) * 0.8,
                 court.getWidth() * 0.03
         );
         player1Racket = new Racket("/IMAGES/racket1.jpg", court, +1);

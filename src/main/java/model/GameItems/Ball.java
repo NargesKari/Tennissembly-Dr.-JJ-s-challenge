@@ -5,6 +5,7 @@ import javafx.animation.Timeline;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -21,8 +22,8 @@ import java.util.List;
 public class Ball extends Circle {
     private final Ellipse shadow;
     private final List<Circle> trails;
-    private DoubleProperty ballRadius = new SimpleDoubleProperty();
-    private BallAnimation animation;
+    private final DoubleProperty ballRadius = new SimpleDoubleProperty();
+    private final BallAnimation animation;
 
     public Ball(double x, double y, double radius) {
         this.setCenterX(x);
@@ -63,11 +64,6 @@ public class Ball extends Circle {
         animation = new BallAnimation(this);
     }
 
-    // گرفتن سایه
-    public Ellipse getShadow() {
-        return shadow;
-    }
-
     public DoubleProperty getBallRadius() {
         return ballRadius;
     }
@@ -88,5 +84,9 @@ public class Ball extends Circle {
         for (int i = 0; i < 4; i++) {
             page.getChildren().add(trails.get(i));
         }
+    }
+
+    public Group getGroup() {
+        return new Group(shadow, trails.get(0), trails.get(1), trails.get(2), trails.get(3), this);
     }
 }

@@ -1,0 +1,16 @@
+.custom-checkbox {
+    -fx-font-family: "Comic Sans MS";
+    -fx-font-size: 12px;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow(one-pass-box, rgba(0, 0, 0, 0.8), 10, 0.88, 0, 0);
+}
+
+.custom-checkbox .box {
+    -fx-background-color: black;
+    -fx-border-color: red;
+    -fx-border-width: 2px;
+}
+
+.custom-checkbox:selected .mark {
+    -fx-background-color: red;
+}

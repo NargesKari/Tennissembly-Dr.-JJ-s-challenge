@@ -26,10 +26,10 @@ import java.util.Random;
 import static javafx.scene.paint.Color.WHITE;
 
 public class PaneDesigner {
-    public static void setUpPaneSettings(Pane pane, Stage stage, String backGroundPath, String stageName) {
+    public static void setUpPaneSettings(Pane pane, Stage stage, String backGroundPath) {
         pane.prefWidthProperty().bind(stage.widthProperty());
         pane.prefHeightProperty().bind(stage.heightProperty().subtract(20));
-        getBackGround(pane, backGroundPath, stageName);
+        getBackGround(pane, backGroundPath);
         setImageOnButtons(pane);
         Scene scene = new Scene(pane);
         stage.setScene(scene);
@@ -38,15 +38,8 @@ public class PaneDesigner {
         stage.sizeToScene();
     }
 
-    public static void getBackGround(Pane pane, String backGroundPath, String stageName) {
-        Random random = new Random();
-        int numb = random.nextInt(8) + 1;
-        String path = backGroundPath;
-        if (!stageName.equals("")) {
-            path = ((numb == 8 || stageName.equals("gameBoard")) ?
-                    ("/IMAGES/" + stageName + ".png") : ("/IMAGES/backGround" + numb + ".gif"));
-        }
-        Image image = new Image(Objects.requireNonNull(PaneDesigner.class.getResource(path)).toExternalForm());
+    public static void getBackGround(Pane pane, String backGroundPath) {
+        Image image = new Image(Objects.requireNonNull(PaneDesigner.class.getResource(backGroundPath)).toExternalForm());
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true,
                 true, false, true);
         BackgroundFill backgroundFill = new BackgroundFill(Color.BLACK, CornerRadii.EMPTY, null);
@@ -55,6 +48,15 @@ public class PaneDesigner {
                 BackgroundRepeat.NO_REPEAT,
                 BackgroundPosition.CENTER,
                 backgroundSize);
+        if (backGroundPath.equals("/IMAGES/oh.gif")){
+            backgroundImage = new BackgroundImage(
+                    image,
+                    BackgroundRepeat.REPEAT,
+                    BackgroundRepeat.REPEAT,
+                    BackgroundPosition.CENTER,
+                    null
+            );
+        }
         pane.setBackground(new Background(new BackgroundFill[]{backgroundFill}, new BackgroundImage[]{backgroundImage}));
     }
 

@@ -1,143 +1,100 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
+    <HBox>
+        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="15.0" onMouseClicked="#information"
+                   pickOnBounds="true" preserveRatio="true">
+            <Image url="@../IMAGES/informationIcon.png">
+            </Image>
+        </ImageView>
+        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="15.0" onMouseClicked="#back"
+                   pickOnBounds="true" preserveRatio="true">
+            <Image url="@../IMAGES/backIcon.png">
+            </Image>
+        </ImageView>
+    </HBox>
+    <Rectangle fx:id="court" fill="green" height="493.0" stroke="white" strokeWidth="5.0" width="342.0"/>
+    <StackPane fx:id="scorePane" prefHeight="150.0" prefWidth="200.0">
+        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../IMAGES/scoreBoard.png"/>
+        </ImageView>
+        <HBox prefHeight="58.0" prefWidth="200.0" spacing="45" alignment="CENTER">
+            <Label fx:id="score1Label" alignment="CENTER" prefHeight="38.0" prefWidth="40.0" text="Label">
+                <font>
+                    <Font name="Comic Sans MS Bold" size="20.0"/>
+                </font>
+            </Label>
+            <Label fx:id="score2Label" alignment="CENTER" prefHeight="38.0" prefWidth="40.0" text="Label">
+                <font>
+                    <Font name="Comic Sans MS Bold" size="20.0"/>
+                </font>
+            </Label>
+        </HBox>
+    </StackPane>
+    <StackPane fx:id="machinePane" prefHeight="156.0" prefWidth="177.0">
+        <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../IMAGES/machine1.png"/>
+        </ImageView>
+        <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="219.0" spacing="2">
+            <ChoiceBox fx:id="choiceBox" prefHeight="19.0" prefWidth="140.0"
+                       style="-fx-background-color: black;                                   -fx-text-fill: white;                                              -fx-font-family: 'Comic Sans MS';                                                      -fx-font-size: 12pt;"/>
 
-<!--    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="723.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">-->
-<!--        <Image url="@../IMAGES/killIcon.png">-->
-<!--        </Image>-->
-<!--    </ImageView>-->
-
-<!--    <Label fx:id="wave" layoutX="372.0" layoutY="10.0" prefHeight="41.0" prefWidth="57.0" text="Wave: 1" textFill="WHITE">-->
-<!--        <font>-->
-<!--            <Font name="Comic Sans MS" size="14.0" />-->
-<!--        </font>-->
-<!--        <effect>-->
-<!--            <DropShadow height="35.57" radius="18.377499999999998" spread="0.8" width="39.94" />-->
-<!--        </effect>-->
-<!--    </Label>-->
-<!--    <Label fx:id="endWave" layoutX="226.0" layoutY="38.0" prefHeight="41.0" prefWidth="381.0" textFill="WHITE">-->
-<!--        <font>-->
-<!--            <Font name="Comic Sans MS" size="18.0" />-->
-<!--        </font>-->
-<!--        <effect>-->
-<!--            <DropShadow height="35.57" radius="18.377499999999998" spread="0.8" width="39.94" />-->
-<!--        </effect>-->
-<!--    </Label>-->
-<!--    <Label fx:id="warning" layoutX="338.0" layoutY="62.0" prefHeight="41.0" prefWidth="125.0" text="ki" textFill="RED">-->
-<!--        <font>-->
-<!--            <Font name="Comic Sans MS" size="18.0" />-->
-<!--        </font>-->
-<!--        <effect>-->
-<!--            <DropShadow height="39.94" radius="18.7425" spread="0.81" width="37.03" />-->
-<!--        </effect>-->
-<!--    </Label>-->
-
-<!--    <Label fx:id="kill" layoutX="768.0" layoutY="22.0" text="0" textFill="WHITE">-->
-<!--        <font>-->
-<!--            <Font name="Comic Sans MS" size="12.0" />-->
-<!--        </font>-->
-<!--        <effect>-->
-<!--            <DropShadow height="37.75" radius="18.9225" spread="0.87" width="39.94" />-->
-<!--        </effect>-->
-<!--    </Label>-->
-
-<!--    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="9.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">-->
-<!--        <Image url="@../IMAGES/nuclearLogo.png">-->
-<!--        </Image>-->
-<!--    </ImageView>-->
-
-<!--    <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="9.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">-->
-<!--        <Image url="@../IMAGES/clusterLogo.png">-->
-<!--        </Image>-->
-<!--    </ImageView>-->
-
-<!--    <Label fx:id="nuclearCount" layoutX="53.0" layoutY="21.0" text="0" textFill="WHITE">-->
-<!--        <font>-->
-<!--            <Font name="Comic Sans MS" size="12.0" />-->
-<!--        </font>-->
-<!--        <effect>-->
-<!--            <DropShadow height="37.75" radius="18.9225" spread="0.87" width="39.94" />-->
-<!--        </effect>-->
-<!--    </Label>-->
-
-<!--    <Label fx:id="clusterCount" layoutX="53.0" layoutY="58.0" text="0" textFill="WHITE">-->
-<!--        <font>-->
-<!--            <Font name="Comic Sans MS" size="12.0" />-->
-<!--        </font>-->
-<!--        <effect>-->
-<!--            <DropShadow height="37.75" radius="18.9225" spread="0.87" width="39.94" />-->
-<!--        </effect>-->
-<!--    </Label>-->
-<!--     <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="728.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">-->
-<!--         <Image url="@../IMAGES/heart.png">-->
-<!--            </Image>-->
-<!--     </ImageView>-->
-<!--    <Label fx:id="hp" layoutX="762.0" layoutY="58.0" prefHeight="18.0" prefWidth="36.0" text="0" textFill="WHITE">-->
-<!--        <font>-->
-<!--            <Font name="Comic Sans MS" size="12.0" />-->
-<!--        </font>-->
-<!--        <effect>-->
-<!--            <DropShadow height="37.75" radius="18.9225" spread="0.87" width="39.94" />-->
-<!--        </effect>-->
-<!--    </Label>-->
-<!--    <ImageView fitHeight="30.0" fitWidth="36.0" layoutX="98.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">-->
-<!--        <Image url="@../IMAGES/iceLogo.png">-->
-<!--        </Image>-->
-<!--    </ImageView>-->
-<!--   <ProgressBar fx:id="freezeBar" layoutX="134.0" layoutY="21.0" prefHeight="18.0" prefWidth="99.0" progress="0.0" />-->
-    <ImageView fitHeight="30.0" fitWidth="36.0" layoutX="15.0" layoutY="15.0" onMouseClicked="#pause" pickOnBounds="true" preserveRatio="true">
-        <Image url="@../IMAGES/pauseIcon.png">
-        </Image>
-    </ImageView>
-    <Rectangle fx:id="court" fill="green" height="493.0" stroke="white" strokeWidth="5.0" width="342.0" x="0.0" y="0.0" />
-   <VBox fx:id="vbox" alignment="CENTER" prefHeight="168.0" prefWidth="168.0">
-      <children>
-         <Label alignment="CENTER" prefHeight="17.0" prefWidth="169.0" text="Chose movement">
+            <HBox alignment="BOTTOM_CENTER" prefHeight="39.0" prefWidth="300.0">
+                <Label text="a:" textAlignment="CENTER">
+                    <font>
+                        <Font name="Comic Sans MS Bold" size="13.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="a" prefHeight="20.0" prefWidth="30.0"
+                           style="-fx-background-color: black; -fx-text-fill: white;">
+                    <font>
+                        <Font name="Comic Sans MS Bold Italic" size="12.0"/>
+                    </font>
+                </TextField>
+                <Label text=" b:" textAlignment="CENTER">
+                    <font>
+                        <Font name="Comic Sans MS Bold" size="13.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="b" prefHeight="20.0" prefWidth="30.0"
+                           style="-fx-background-color: black; -fx-text-fill: white;">
+                    <font>
+                        <Font name="Comic Sans MS Bold Italic" size="12.0"/>
+                    </font>
+                </TextField>
+                <Label text=" c:" textAlignment="CENTER">
+                    <font>
+                        <Font name="Comic Sans MS Bold" size="13.0"/>
+                    </font>
+                </Label>
+                <TextField fx:id="c" prefHeight="20.0" prefWidth="30.0"
+                           style="-fx-background-color: black; -fx-text-fill: white;">
+                    <font>
+                        <Font name="Comic Sans MS Bold Italic" size="12.0"/>
+                    </font>
+                </TextField>
+            </HBox>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="69.0" opacity="0.0" stroke="BLACK"
+                       strokeType="INSIDE" width="83.0" onMouseClicked="#applyMovement"/>
+        </VBox>
+    </StackPane>
+    <StackPane fx:id="timerPane" prefHeight="140.0" prefWidth="200.0">
+        <ImageView fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@../IMAGES/timer.png"/>
+        </ImageView>
+        <Label fx:id="timerLabel" alignment="TOP_CENTER" prefHeight="38.0" prefWidth="100.0" text="00:00">
             <font>
-               <Font name="Comic Sans MS Bold" size="15.0" />
-            </font></Label>
-         <ChoiceBox fx:id="choiceBox" depthTest="DISABLE" prefHeight="25.0" prefWidth="172.0">
-            <cursor>
-               <Cursor fx:constant="DEFAULT" />
-            </cursor></ChoiceBox>
-         <HBox prefHeight="39.0" prefWidth="168.0">
-            <children>
-               <Label text=" a:">
-                  <font>
-                     <Font name="Comic Sans MS Bold" size="13.0" />
-                  </font></Label>
-               <TextField fx:id="a" prefHeight="25.0" prefWidth="30.0" />
-               <Label text=" b:">
-                  <font>
-                     <Font name="Comic Sans MS Bold" size="13.0" />
-                  </font></Label>
-               <TextField fx:id="b" prefHeight="25.0" prefWidth="30.0" />
-               <Label text=" c:">
-                  <font>
-                     <Font name="Comic Sans MS Bold" size="13.0" />
-                  </font></Label>
-               <TextField fx:id="c" prefHeight="25.0" prefWidth="30.0" />
-            </children>
-         </HBox>
-         <Button mnemonicParsing="false" onMouseClicked="#applyMovement" prefHeight="50.0" prefWidth="80.0" text="APPLY" />
-      </children>
-      <effect>
-         <DropShadow height="213.05" radius="99.0275" spread="0.8" width="185.06">
-            <color>
-               <Color green="1.0" blue="0.41292640566825867" />
-            </color>
-         </DropShadow>
-      </effect>
-   </VBox>
+                <Font name="Comic Sans MS Bold" size="20.0"/>
+            </font>
+        </Label>
+    </StackPane>
 
 
 </AnchorPane>
