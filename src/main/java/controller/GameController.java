@@ -29,9 +29,9 @@ public class GameController {
 
     public Rectangle court;
     public ChoiceBox choiceBox;
-    public TextField a;
-    public TextField b;
-    public TextField c;
+    public Spinner a;
+    public Spinner b;
+    public Spinner c;
     public StackPane scorePane;
     public Label score1Label;
     public Label score2Label;
@@ -104,7 +104,7 @@ public class GameController {
         court.setStroke(Color.WHITE); // خطوط حاشیه
         court.setStrokeWidth(5); // ضخامت خطوط
         court.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/IMAGES/court.jpg")).toExternalForm())));
-        choiceBox.getItems().addAll("ax^2 + bx + c", "a sin(bx + c)", "Simple");
+        choiceBox.getItems().addAll("at^2 + bt + c", "a Sin(bt + c)", "aX + bY");
         choiceBox.setValue("Simple");
         score1Label.textProperty().bind(scoreTop);
         score2Label.textProperty().bind(scoreBottom);
@@ -114,12 +114,19 @@ public class GameController {
             int seconds = secondsElapsed % 60;
             timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
         }));
+        a.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-30, 30, 10));
+        a.getEditor().setStyle("-fx-background-color: black; -fx-text-fill: white;");
+        b.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-30, 30, 1));
+        b.getEditor().setStyle("-fx-background-color: black; -fx-text-fill: white;");
+        c.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-30, 30, 0));
+        c.getEditor().setStyle("-fx-background-color: black; -fx-text-fill: white;");
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
 
     public void applyMovement(MouseEvent mouseEvent) {
-        ball.getAnimation().setArguments(getIntInput(a), getIntInput(b), getIntInput(c));
+        ball.getAnimation().setArguments((Integer)a.getValue(),
+                (Integer)b.getValue(), (Integer)c.getValue());
         switch (choiceBox.getValue().toString()) {
             case "ax^2 + bx + c" -> ball.getAnimation().setMode(1);
             case "a sin(bx + c)" -> ball.getAnimation().setMode(2);
@@ -137,13 +144,11 @@ public class GameController {
 
     public void information(MouseEvent mouseEvent) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Select a method from the options on the right.  \n" +
-                "For the first two options, you can enter three custom integer values, while the third option is the default mode.  \n" +
-                "If you do not enter all three values, they will be considered as zero.  \n" +
+                "For the first two options, you can enter three custom integer values (a, b, c). However, the third option only requires a and b.\n" +
+                "We recommend using (-10, 0, 30) for the first option, (30, 30, 30) for the second, and (10, 10) for the last one.\n" +
+                "To apply your selected changes, press the orange button.  \n" +
                 "\n" +
-                "Our recommendation for the first option is -1, 0, 150 and for the second option, 1, 1, 1.  \n" +
-                "To apply your selected changes, press the **orange button.  \n" +
-                "\n" +
-                "Also, pay attention to your **racket, ball, and the point of impact.", ButtonType.OK);
+                "Also, pay attention to your racket, ball, and the point of impact.", ButtonType.OK);
         alert.setTitle("HELP");
         alert.setHeaderText("let me help you :)");
         DialogPane dialogPane = alert.getDialogPane();
@@ -171,7 +176,6 @@ public class GameController {
         scoreP.set(String.valueOf(score));
         if (selectedMode == 2) {
             computerPlayer.stop();
-            racket1.setY(0);
         }
         ball.getAnimation().stop();
         if (score >= maxScore) {
@@ -183,7 +187,7 @@ public class GameController {
         viewPage.getPane().getChildren().remove(ball.getGroup());
         ball = new Ball(
                 court.xProperty().get() + (court.getWidth() / 2),
-                court.yProperty().get() + (court.getHeight()) * (fromTop ? 0.8 : 0.1),
+                court.yProperty().get() + (court.getHeight()) * (fromTop || selectedMode == 3 ? 0.8 : 0.1),
                 court.getWidth() * 0.03
         );
         viewPage.getPane().getChildren().add(ball.getGroup());
@@ -196,7 +200,7 @@ public class GameController {
         ball.getAnimation().play();
         if (selectedMode == 2) {
             computerPlayer.setBall(ball);
-            computerPlayer.play();
+            computerPlayer.playFromTop();
         }
     }
 

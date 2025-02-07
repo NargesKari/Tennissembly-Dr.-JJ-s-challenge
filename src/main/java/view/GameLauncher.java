@@ -32,6 +32,7 @@ public class GameLauncher extends Application {
         pane = fxmlLoader.load();
         PaneDesigner.setUpPaneSettings(pane, stage,"/IMAGES/b7.jpg");
         ((GameController)fxmlLoader.getController()).setViewPage(this);
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -45,6 +46,7 @@ public class GameLauncher extends Application {
 
     public void endGame(int topScore, int bottomScore, String time) {
         try {
+            stage.setResizable(true);
             new ResultPage(topScore,bottomScore, selectedMode, time).start(stage);
         } catch (Exception e) {
             e.printStackTrace();
@@ -53,6 +55,7 @@ public class GameLauncher extends Application {
 
     public void back() {
         try {
+            stage.setResizable(true);
             new PreGameMenu().start(stage);
         } catch (Exception e) {
             e.printStackTrace();

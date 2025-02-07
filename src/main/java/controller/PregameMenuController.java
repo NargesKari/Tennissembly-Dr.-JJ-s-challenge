@@ -33,7 +33,7 @@ public class PregameMenuController {
         checkBox1.setOnAction(event -> handleCheckBoxSelection(checkBox1, 1)); //Two-player
         checkBox2.setOnAction(event -> handleCheckBoxSelection(checkBox2, 2)); //Play with computer
         checkBox3.setOnAction(event -> handleCheckBoxSelection(checkBox3, 3)); //Practise
-        spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 5));
+        spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 100));
         spinner.getEditor().setStyle("-fx-background-color: black; -fx-text-fill: white;");
 
     }

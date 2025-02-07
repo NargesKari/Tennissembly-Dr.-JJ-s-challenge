@@ -51,8 +51,7 @@
                         </color></DropShadow>
                   </effect>
                     </Label>
-                    <Spinner fx:id="spinner" prefHeight="25.0" prefWidth="60.0">
-                    </Spinner>
+                    <Spinner fx:id="spinner" prefHeight="25.0" prefWidth="60.0"/>
 
 
                 </HBox>
