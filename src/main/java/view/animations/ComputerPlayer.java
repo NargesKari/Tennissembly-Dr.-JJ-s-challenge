@@ -2,19 +2,19 @@ package view.animations;
 
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
-import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 import model.GameItems.Ball;
 import model.GameItems.Racket;
 
-import java.util.Random;
+
+import static model.MyNativeLibrary.makeRandomMovement;
 
 public class ComputerPlayer extends Transition {
     Racket racket;
     double x;
     double y;
     double racketSize;
-    Random random = new Random();
+
     private Ball ball;
 
     public ComputerPlayer(Racket racket, Ball ball) {
@@ -38,8 +38,8 @@ public class ComputerPlayer extends Transition {
         double targetX = ball.getCenterX();
         double targetY = ball.getCenterY();
 
-        x+=  (targetX - x - racketSize / 1.6) * frac * random.nextDouble() * random.nextDouble() * random.nextDouble();
-        y += (targetY - y - racketSize / 3) * frac * random.nextDouble() * random.nextDouble() * random.nextDouble();
+        x+=  makeRandomMovement((targetX - x - racketSize / 1.6) , frac );
+        y += makeRandomMovement((targetY - y - racketSize / 3) , frac );
 
         y = Math.max(0, Math.min(y, racket.getHeight()));
 

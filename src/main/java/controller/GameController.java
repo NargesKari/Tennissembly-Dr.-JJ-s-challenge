@@ -105,7 +105,7 @@ public class GameController {
         court.setStrokeWidth(5); // ضخامت خطوط
         court.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/IMAGES/court.jpg")).toExternalForm())));
         choiceBox.getItems().addAll("at^2 + bt + c", "a Sin(bt + c)", "aX + bY");
-        choiceBox.setValue("Simple");
+        choiceBox.setValue("aX + bY");
         score1Label.textProperty().bind(scoreTop);
         score2Label.textProperty().bind(scoreBottom);
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
@@ -128,18 +128,10 @@ public class GameController {
         ball.getAnimation().setArguments((Integer)a.getValue(),
                 (Integer)b.getValue(), (Integer)c.getValue());
         switch (choiceBox.getValue().toString()) {
-            case "ax^2 + bx + c" -> ball.getAnimation().setMode(1);
-            case "a sin(bx + c)" -> ball.getAnimation().setMode(2);
-            case "Simple" -> ball.getAnimation().setMode(-1);
+            case "at^2 + bt + c" -> ball.getAnimation().setMode(1);
+            case "a Sin(bt + c)" -> ball.getAnimation().setMode(2);
+            case "aX + bY" -> ball.getAnimation().setMode(-1);
         }
-    }
-
-    private int getIntInput(TextField x) {
-        try {
-            return Integer.parseInt(x.getText());
-        } catch (Exception ignored) {
-        }
-        return 0;
     }
 
     public void information(MouseEvent mouseEvent) {

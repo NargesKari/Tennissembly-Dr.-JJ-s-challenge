@@ -77,12 +77,6 @@ public class Ball extends Circle {
         }
     }
 
-    public void addChildren(Pane page) {
-        page.getChildren().add(shadow);
-        for (int i = 0; i < 4; i++) {
-            page.getChildren().add(trails.get(i));
-        }
-    }
 
     public Group getGroup() {
         return new Group(shadow, trails.get(0), trails.get(1), trails.get(2), trails.get(3), this);

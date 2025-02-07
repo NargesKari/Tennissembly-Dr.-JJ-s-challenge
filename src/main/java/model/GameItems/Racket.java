@@ -9,6 +9,8 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 
+import static model.MyNativeLibrary.makeInBound;
+
 public class Racket extends Rectangle {
     private Ellipse collisionArea;
     private Group group;
@@ -42,10 +44,10 @@ public class Racket extends Rectangle {
 
     private void movePaddle(MouseEvent event, Rectangle court, int mul) {
         double a = court.getHeight() - 1.5 * this.getHeight();
-        double newX = Math.min(Math.max(event.getX() - this.getWidth() / 2, court.getX() - (this.getWidth() / 2)),
+        double newX = makeInBound(event.getX() - this.getWidth() / 2, court.getX() - (this.getWidth() / 2),
                 court.getX() + court.getWidth() - (this.getWidth() / 2));
         this.setX(newX);
-        double newY = Math.min(Math.max(event.getY() - this.getHeight() / 2 - 0.5 * (1 - mul) * a,-0.5 * this.getHeight()),
+        double newY = makeInBound(event.getY() - this.getHeight() / 2 - 0.5 * (1 - mul) * a,-0.5 * this.getHeight(),
                 this.getHeight() * 1.5);
         this.setY(newY + 0.5 * (1 - mul) * a);
     }

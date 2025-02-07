@@ -12,11 +12,12 @@ import model.GameItems.Racket;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static model.MyNativeLibrary.*;
+
 public class BallAnimation extends Transition {
 
     private final Ball ball;
     private final int SPEEDY = 2;
-    private final double factor = 0.1;
     private final DoubleProperty X = new SimpleDoubleProperty();
     private final DoubleProperty Y = new SimpleDoubleProperty();
     private final DoubleProperty radius;
@@ -58,19 +59,16 @@ public class BallAnimation extends Transition {
         this.setCycleCount(INDEFINITE); // اجرای بی‌نهایت
     }
 
+
     @Override
     protected void interpolate(double frac) {
-        trailsYValues = updateTrailValues(trailsYValues,y);
-        trailsY.get(3).set(trailsYValues[3]);
-        trailsY.get(2).set(trailsYValues[2]);
-        trailsY.get(1).set(trailsYValues[1]);
-        trailsY.get(0).set(trailsYValues[0]);
-
+        trailsYValues = updateTrailValues(trailsYValues, y);
         trailsXValues = updateTrailValues(trailsXValues, x);
-        trailsX.get(3).set(trailsXValues[3]);
-        trailsX.get(2).set(trailsXValues[2]);
-        trailsX.get(1).set(trailsXValues[1]);
-        trailsX.get(0).set(trailsXValues[0]);
+        for (int i = 0; i < 4; i++) {
+            trailsY.get(i).set(trailsYValues[i]);
+            trailsX.get(i).set(trailsXValues[i]);
+        }
+
 
         y += speedY;
         Y.set(y);
@@ -80,9 +78,9 @@ public class BallAnimation extends Transition {
             X.set(x);
         }
 
-        ball.setRotate(ball.getRotate() + Math.hypot(speedX, speedY) * 3);
+        ball.setRotate(ball.getRotate() + myHypot(speedX, speedY));
 
-        System.out.println("-");
+        System.out.println("-> " + movementMode + " a: " + a + ",b: " + b + ",c: " + c);
         if (ball.getRadius() == courtWidth * 0.03) {
             if (ball.getBoundsInParent().intersects(racket1.getCollisionArea().getBoundsInParent()))
                 racketHit(racket1);
@@ -100,9 +98,8 @@ public class BallAnimation extends Transition {
             switch (movementMode) {
                 case 1 -> //Parabola
                 {
-                    if ((cal = calculateParabola()) > 0) {
-                        radius.set(Math.max(Math.min(courtWidth * cal * 0.001,
-                                courtWidth * 0.1), courtWidth * 0.03));
+                    if ((cal = calculateParabola(time, a, b, c)) > 0) {
+                        radius.set(makeInBound(cal,0.1,0.03 * courtWidth ));
                     } else radius.set(courtWidth * 0.03);
                     time += speedY;
                     x += speedX;
@@ -110,31 +107,14 @@ public class BallAnimation extends Transition {
                 }
                 case 2 -> //Sin
                 {
-                    x += 5 * a * Math.sin(10 * b * time + c);
-                    if (isBetween(x, courtX, courtX + courtWidth)) {
+                    if (isBetween(x + sin(time, a, b, c), courtX, courtX + courtWidth)) {
+                        x += sin(time, a, b, c);
                         X.set(x);
                     }
                     time += (speedY * 0.001);
                 }
             }
         }
-    }
-
-    private double[] updateTrailValues(double[] trailsValues, double value){
-        trailsValues[3] += 0.1 * (trailsValues[2] - trailsValues[3]);
-        trailsValues[2] += 0.1 * (trailsValues[1] - trailsValues[2]);
-        trailsValues[1] += 0.1 * (trailsValues[0] - trailsValues[1]);
-        trailsValues[0] += 0.1 * (value - trailsValues[0]);
-        return trailsValues;
-    }
-
-    public static boolean isBetween(double p, double q, double r) {
-        return (p > q && p < r) ;
-    }
-
-
-    private double calculateParabola() {
-        return (time * (0.01 * a * time + b) + c);
     }
 
     void racketHit(Racket racket) {
@@ -144,10 +124,9 @@ public class BallAnimation extends Transition {
     }
 
 
-
     public void setArguments(int a, int b, int c) {
         time = 0;
-        this.a = a < 0 ? (int) Math.floor(a / 10.0) : (int) Math.ceil(a / 10.0);
+        this.a = divRoundAwayFromZero(a, 10.0);
         this.b = b;
         this.c = c;
     }
@@ -155,14 +134,15 @@ public class BallAnimation extends Transition {
     public void setMode(int i) {
         if (i == 1) {
             time = (ball.getCenterY() - (courtY + courtHeight / 2));
-            b = (int) Math.ceil(b / 3.0);
+            b = divRoundAwayFromZero(b, 3.0);
             c *= 5;
         } else if (i == 2) {
-            b = (int) Math.ceil(b / 3.0);
-            c = (int) Math.ceil(c / 3.0);
+            a *= 5;
+            b = divRoundAwayFromZero(b, 3.0) * 10;
+            c = divRoundAwayFromZero(c, 3.0);
         } else {
-            a = Math.abs(a);
-            b = b < 0 ? -(int) Math.floor(b / 5.0) : (int) Math.ceil(b / 5.0);
+            a = asmAbs(a);
+            b = asmAbs(divRoundAwayFromZero(b, 5.0));
         }
         movementMode = i;
     }
