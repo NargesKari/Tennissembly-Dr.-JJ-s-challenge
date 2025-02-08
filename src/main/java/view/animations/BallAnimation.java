@@ -94,7 +94,7 @@ public class BallAnimation extends Transition {
                 case 1 -> //Parabola
                 {
                     if ((cal = calculateParabola(time, a, b, c)) > 0) {
-                        radius.set(makeInBound(cal, 0.1, 0.03 * courtWidth));
+                        radius.set(makeInBound(cal, 0.1, 0.03) * courtWidth);
                     } else radius.set(courtWidth * 0.03);
                     time += speedY;
                     x += speedX;

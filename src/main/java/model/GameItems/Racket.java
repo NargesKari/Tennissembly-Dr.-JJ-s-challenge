@@ -9,7 +9,7 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 
-import static model.MyNativeLibrary.makeInBound;
+import static model.MyNativeLibrary.*;
 
 public class Racket extends Rectangle {
     private Ellipse collisionArea;

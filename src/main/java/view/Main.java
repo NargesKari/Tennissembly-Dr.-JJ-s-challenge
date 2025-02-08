@@ -9,7 +9,6 @@ import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.PaneDesigner;
-
 import java.util.Objects;
 
 public class Main extends Application {

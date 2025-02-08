@@ -1,0 +1,23 @@
+javac MyNativeLibrary.java
+javac -h . MyNativeLibrary.java
+
+هدر فایل سی... تابع های توی فایل .h  باید کامل بشه...
+
+
+#include <jni.h>
+
+#include "model_MyNativeLibrary.h"
+
+
+cd C:\Users\ASUS\IdeaProjects\Tennissembly\src\main\java\model
+
+gcc -shared -o MyNative.dll MyNative.c -Wl,--out-implib,libMyNative.a -m64 -I"C:\Program Files\Java\jdk-21\include" -I"C:\Program Files\Java\jdk-21\include\win32"
+
+یا :
+
+gcc -shared -o MyNative.dll MyNative.c -Wl,"--out-implib,libMyNative.a" -m64 -I"C:\Program Files\Java\jdk-21\include" -I"C:\Program Files\Java\jdk-21\include\win32"
+بعد هم کپی کردن dll نتیجه در "C:\Program Files\Java\jdk-21\bin"
+
+راه ساده تر برای 2 مرحله قبل: باز کردن cmd با Run as Administrator و:
+
+ gcc -shared -o "C:\Program Files\Java\jdk-21\bin\MyNative.dll" MyNative.c -Wl,--out-implib,libMyNative.a -m64 -I"C:\Program Files\Java\jdk-21\include" -I"C:\Program Files\Java\jdk-21\include\win32"

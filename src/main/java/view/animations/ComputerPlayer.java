@@ -7,7 +7,7 @@ import model.GameItems.Ball;
 import model.GameItems.Racket;
 
 
-import static model.MyNativeLibrary.makeRandomMovement;
+import static model.MyNativeLibrary.*;
 
 public class ComputerPlayer extends Transition {
     Racket racket;
