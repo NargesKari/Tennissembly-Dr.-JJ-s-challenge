@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
@@ -7,8 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.control.*;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -19,11 +19,14 @@ import javafx.util.Duration;
 import model.Game;
 import model.GameItems.Ball;
 import model.GameItems.Racket;
+import model.Music;
 import view.GameLauncher;
-import view.animations.ComputerPlayer;
+import model.animations.ComputerPlayer;
 
 import java.util.Objects;
 import java.util.Optional;
+
+import static model.library.MyNativeLibrary.isKeyPressed;
 
 public class GameController {
 
@@ -38,6 +41,7 @@ public class GameController {
     public Label timerLabel;
     public StackPane machinePane;
     public StackPane timerPane;
+    public ImageView music;
     Ball ball;
     int secondsElapsed = 0;
     Timeline timeline;
@@ -46,6 +50,8 @@ public class GameController {
     ComputerPlayer computerPlayer;
     Racket racket1;
     Racket racket2;
+    double[] racketXBounds = new double[2];
+    double[] racketYBounds = new double[4];
     private StringProperty scoreTop = new SimpleStringProperty("0");
     private StringProperty scoreBottom = new SimpleStringProperty("0");
     private Game game;
@@ -75,6 +81,22 @@ public class GameController {
         selectedMode = viewPage.getSelectedMode();
         applySelectedMode();
         maxScore = viewPage.getMaxScore();
+        racketXBounds[0] = court.getX() - (game.getPlayer1Racket().getHeight() / 2);
+        racketXBounds[1] = racketXBounds[0] + court.getWidth();
+        racketYBounds[0] = -0.5 * game.getPlayer1Racket().getHeight();
+        racketYBounds[1] = -3 * racketYBounds[0];
+        racketYBounds[2] = -racketYBounds[1] + court.getHeight();
+        racketYBounds[3] = court.getHeight();
+        System.out.println(racketXBounds[0] + " " + racketXBounds[1]);
+        for (int i = 0; i < 4; i++) {
+            System.out.println(racketYBounds[i]);
+        }
+        new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                moveRacket();
+            }
+        }.start();
     }
 
     private void applySelectedMode() {
@@ -122,11 +144,12 @@ public class GameController {
         c.getEditor().setStyle("-fx-background-color: black; -fx-text-fill: white;");
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
+        music.setImage(Music.getMusicStateImage());
     }
 
     public void applyMovement(MouseEvent mouseEvent) {
-        ball.getAnimation().setArguments((Integer)a.getValue(),
-                (Integer)b.getValue(), (Integer)c.getValue());
+        ball.getAnimation().setArguments((Integer) a.getValue(),
+                (Integer) b.getValue(), (Integer) c.getValue());
         switch (choiceBox.getValue().toString()) {
             case "at^2 + bt + c" -> ball.getAnimation().setMode(1);
             case "a Sin(bt + c)" -> ball.getAnimation().setMode(2);
@@ -135,12 +158,15 @@ public class GameController {
     }
 
     public void information(MouseEvent mouseEvent) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Select a method from the options on the right.  \n" +
-                "For the first two options, you can enter three custom integer values (a, b, c). However, the third option only requires a and b.\n" +
-                "We recommend using (-10, 0, 30) for the first option, (30, 30, 30) for the second, and (10, 10) for the last one.\n" +
-                "To apply your selected changes, press the orange button.  \n" +
-                "\n" +
-                "Also, pay attention to your racket, ball, and the point of impact.", ButtonType.OK);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,
+                (selectedMode == 1 ? "To move the top racket up, down, left, and right, use the W, S, A, and D keys, respectively.\n" : "")
+                        + "To move the top racket bottom, down, left, and right, use the I, K, J, and L keys, respectively.\n"
+                        + "Select a method from the options on the right.  \n" +
+                        "For the first two options, you can enter three custom integer values (a, b, c). However, the third option only requires a and b but if you add c, it has a permanent effect on **y**.\n" +
+                        "We recommend using (-10, 0, 30) for the first option, (30, 30, 30) for the second, and (10, 10, 12) for the last one.\n" +
+                        "To apply your selected changes, press the orange button.  \n" +
+                        "\n" +
+                        "Also, pay attention to your racket, ball, and the point of impact.", ButtonType.OK);
         alert.setTitle("HELP");
         alert.setHeaderText("let me help you :)");
         DialogPane dialogPane = alert.getDialogPane();
@@ -229,27 +255,42 @@ public class GameController {
         }
     }
 
-    public void moveRacket(KeyEvent keyEvent) {
-        KeyCode code = keyEvent.getCode();
-        if (code == KeyCode.I) {
-            racket2.setY(racket2.getY() - 10);
-        } else if (code == KeyCode.K) {
-            racket2.setY(racket2.getY() + 10);
-        } else if (code == KeyCode.J) {
-            racket2.setX(racket2.getX() - 10);
-        } else if (code == KeyCode.L) {
-            racket2.setX(racket2.getX() + 10);
+    private void moveRacket() {
+        double y = racket2.getY();
+        double x = racket2.getX();
+        if (isKeyPressed(0x49) && y - 5 > racketYBounds[2]) { // I
+            racket2.setY(y - 5);
         }
-        else if (selectedMode==1){
-            if (code == KeyCode.W) {
-                racket1.setY(racket1.getY() - 10);
-            } else if (code == KeyCode.S) {
-                racket1.setY(racket1.getY() + 10);
-            } else if (code == KeyCode.A) {
-                racket1.setX(racket1.getX() - 10);
-            } else if (code == KeyCode.D) {
-                racket1.setX(racket1.getX() + 10);
+        if (isKeyPressed(0x4B) && y + 5 < racketYBounds[3]) { // K
+            racket2.setY(y + 5);
+        }
+        if (isKeyPressed(0x4A) && x - 5 > racketXBounds[0]) { // J
+            racket2.setX(x - 5);
+        }
+        if (isKeyPressed(0x4C) && x + 5 < racketXBounds[1]) { // L
+            racket2.setX(x + 5);
+        }
+        if (selectedMode == 1) {
+            y = racket1.getY();
+            x = racket1.getX();
+            if (isKeyPressed(0x57) && y - 5 > racketYBounds[0]) { // W
+                racket1.setY(y - 5);
+            }
+            if (isKeyPressed(0x53) && y + 5 < racketYBounds[1]) { // S
+                racket1.setY(y + 5);
+            }
+            if (isKeyPressed(0x41) && x - 5 > racketXBounds[0]) { // A
+                racket1.setX(x - 5);
+            }
+            if (isKeyPressed(0x44) && x + 5 < racketXBounds[1]) { // D
+                racket1.setX(x + 5);
             }
         }
+    }
+
+
+    public void changeMusicState(MouseEvent mouseEvent) {
+        Music.changeMusicState();
+        music.setImage(Music.getMusicStateImage());
     }
 }

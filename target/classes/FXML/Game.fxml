@@ -19,6 +19,8 @@
             <Image url="@../IMAGES/backIcon.png">
             </Image>
         </ImageView>
+        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="15.0" onMouseClicked="#changeMusicState"
+                   pickOnBounds="true" preserveRatio="true" fx:id="music"/>
     </HBox>
     <Rectangle fx:id="court" fill="green" height="493.0" stroke="white" strokeWidth="5.0" width="342.0"/>
     <StackPane fx:id="scorePane" prefHeight="150.0" prefWidth="200.0">

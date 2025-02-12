@@ -41,7 +41,6 @@ public class ResultPageController {
             }
             case 3 -> {
                 winner.setText("You spent " + time.getText() + " resisting " + score1.getText() + " mistakes :)");
-                scoreBox.getChildren().removeAll(scoreBox.getChildren());
             }
         }
     }

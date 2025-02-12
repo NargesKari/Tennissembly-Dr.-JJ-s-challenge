@@ -4,15 +4,18 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import model.Music;
 import view.PreGameMenu;
 public class PregameMenuController {
     public CheckBox checkBox1;
     public CheckBox checkBox2;
     public CheckBox checkBox3;
     public Spinner spinner;
+    public ImageView music;
     private PreGameMenu viewPage;
     private int selectedMode;
 
@@ -33,9 +36,10 @@ public class PregameMenuController {
         checkBox1.setOnAction(event -> handleCheckBoxSelection(checkBox1, 1)); //Two-player
         checkBox2.setOnAction(event -> handleCheckBoxSelection(checkBox2, 2)); //Play with computer
         checkBox3.setOnAction(event -> handleCheckBoxSelection(checkBox3, 3)); //Practise
-        spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 100));
+        spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 5));
         spinner.getEditor().setStyle("-fx-background-color: black; -fx-text-fill: white;");
-
+        music.setImage(Music.getMusicStateImage());
+        music.setOnMouseClicked(this::changeMusicState);
     }
 
     private void applyStyles(CheckBox checkBox) {
@@ -49,6 +53,11 @@ public class PregameMenuController {
         checkBox1.setSelected(selected == checkBox1);
         checkBox2.setSelected(selected == checkBox2);
         checkBox3.setSelected(selected == checkBox3);
+    }
+    public void changeMusicState(MouseEvent mouseEvent) {
+        System.out.println("c");
+        Music.changeMusicState();
+        music.setImage(Music.getMusicStateImage());
     }
 }
 

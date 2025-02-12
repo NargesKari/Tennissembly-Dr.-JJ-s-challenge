@@ -14,8 +14,6 @@
         <maven.compiler.target>19</maven.compiler.target>
     </properties>
 
-    <!-- TODO: Append Your Dependencies Here -->
-
     <dependencies>
         <dependency>
             <groupId>org.openjfx</groupId>

@@ -9,7 +9,7 @@ import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 
-import static model.MyNativeLibrary.*;
+import static model.library.MyNativeLibrary.*;
 
 public class Racket extends Rectangle {
     private Ellipse collisionArea;
@@ -24,7 +24,7 @@ public class Racket extends Rectangle {
         this.widthProperty().bind(this.heightProperty());
         this.setOnMouseDragged(event -> movePaddle(event, court, mul));
 
-        collisionArea = new Ellipse(this.getWidth() / 4.3, this.getWidth() / 15);
+        collisionArea = new Ellipse(this.getWidth() / 4.3, this.getWidth() / 13);
         collisionArea.centerXProperty().bind(this.xProperty().add(this.widthProperty().divide(1.6)));
         collisionArea.centerYProperty().bind(this.yProperty().add(this.heightProperty().divide(3)));
         collisionArea.setFill(Color.TRANSPARENT);

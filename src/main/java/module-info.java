@@ -10,4 +10,6 @@ module Tennissembly {
     opens controller to javafx.fxml;
     opens model to  javafx.fxml;
     opens view to javafx.fxml;
+    exports tests;
+    opens tests to javafx.fxml;
 }

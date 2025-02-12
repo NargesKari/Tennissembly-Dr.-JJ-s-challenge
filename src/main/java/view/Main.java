@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.Music;
 import model.PaneDesigner;
 import java.util.Objects;
 
@@ -41,5 +42,6 @@ public class Main extends Application {
         });
         timeline.getKeyFrames().add(keyFrame);
         timeline.play();
+        Music.playMusic(3);
     }
 }
