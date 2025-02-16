@@ -68,14 +68,14 @@ public class TestTime {
 // اندازه‌گیری تابع اول
         for (int i = 0; i < iterations; i++) {
             long start = System.nanoTime();
-            isBetween0(randomDoubles.get(3 * i), randomDoubles.get(3 * i + 1), randomDoubles.get(3 * i + 2));
+            isBetween(randomDoubles.get(3 * i), randomDoubles.get(3 * i + 1), randomDoubles.get(3 * i + 2));
             long end = System.nanoTime();
             total1 += (end - start);
         }
 // اندازه‌گیری تابع دوم
         for (int i = 0; i < iterations; i++) {
             long start = System.nanoTime();
-            isBetween(randomDoubles.get(3 * i), randomDoubles.get(3 * i + 1), randomDoubles.get(3 * i + 2));
+            isBetween0(randomDoubles.get(3 * i), randomDoubles.get(3 * i + 1), randomDoubles.get(3 * i + 2));
             long end = System.nanoTime();
             total2 += (end - start);
         }
@@ -254,7 +254,7 @@ public class TestTime {
         ArrayList<Double> randomDoubles = new ArrayList<>();
         Random rand = new Random();
         for (int i = 0; i < 4 * iterations; i++) {
-            randomDoubles.add(rand.nextDouble(iterations + 1) - 500);
+            randomDoubles.add(rand.nextDouble(10) - 10);
         }
 // گرم کردن JVM
         for (int i = 0; i < 100; i++) {
@@ -278,7 +278,7 @@ public class TestTime {
         System.out.println("----------Check Sin----------");
         System.out.println("JAVA Avg: " + (total1 / iterations) + " ns");
         System.out.println("C+ASM Avg: " + (total2 / iterations) + " ns");
-        System.out.printf("Relative improvement: %.2f\n", 1 - (double) total2 / (double) total1);
+        System.out.printf("Relative improvement: %.2f\n", 1 - ((double) total2 / (double) total1));
     }
 
     private static void checkDivRoundAwayFromZero() {

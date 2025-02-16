@@ -14,6 +14,6 @@ public class MyNativeLibrary {
     public native static double makeRandomMovement(double direction, double frac);
     public native static boolean isKeyPressed(int keyCode);
     public static void main(String[] args) {
-        System.out.println(divRoundAwayFromZero(1,5));
     }
+
 }

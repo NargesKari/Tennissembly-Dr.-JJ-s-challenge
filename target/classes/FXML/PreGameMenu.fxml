@@ -42,7 +42,7 @@
                     <ImageView fitHeight="90" fitWidth="90">
                         <Image url="@../IMAGES/racket3.jpg" />
                     </ImageView>
-                    <CheckBox fx:id="checkBox3" text="Practise" />
+                    <CheckBox fx:id="checkBox3" text="practice" />
                 </HBox>
                 <HBox alignment="CENTER" spacing="10">
                     <Label text="Select the required score to win " textAlignment="CENTER" textFill="WHITE">

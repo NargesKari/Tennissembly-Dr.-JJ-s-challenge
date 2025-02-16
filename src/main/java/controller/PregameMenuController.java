@@ -35,7 +35,7 @@ public class PregameMenuController {
         applyStyles(checkBox3);
         checkBox1.setOnAction(event -> handleCheckBoxSelection(checkBox1, 1)); //Two-player
         checkBox2.setOnAction(event -> handleCheckBoxSelection(checkBox2, 2)); //Play with computer
-        checkBox3.setOnAction(event -> handleCheckBoxSelection(checkBox3, 3)); //Practise
+        checkBox3.setOnAction(event -> handleCheckBoxSelection(checkBox3, 3)); //practice
         spinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 5));
         spinner.getEditor().setStyle("-fx-background-color: black; -fx-text-fill: white;");
         music.setImage(Music.getMusicStateImage());
@@ -55,7 +55,6 @@ public class PregameMenuController {
         checkBox3.setSelected(selected == checkBox3);
     }
     public void changeMusicState(MouseEvent mouseEvent) {
-        System.out.println("c");
         Music.changeMusicState();
         music.setImage(Music.getMusicStateImage());
     }

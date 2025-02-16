@@ -79,7 +79,7 @@ public class BallAnimation extends Transition {
 
         ball.setRotate(ball.getRotate() + myHypot(speedX, speedY));
         System.out.println("-");
-        System.out.println("a: " + a + "b: " + b + "c: " + c);
+//        System.out.println("a: " + a + "b: " + b + "c: " + c);
         if (ball.getRadius() == courtWidth * 0.03) {
             if (ball.getBoundsInParent().intersects(racket1.getCollisionArea().getBoundsInParent())) racketHit(racket1);
             else if (ball.getBoundsInParent().intersects(racket2.getCollisionArea().getBoundsInParent()))

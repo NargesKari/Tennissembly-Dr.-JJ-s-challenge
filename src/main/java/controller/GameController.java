@@ -87,10 +87,6 @@ public class GameController {
         racketYBounds[1] = -3 * racketYBounds[0];
         racketYBounds[2] = -racketYBounds[1] + court.getHeight();
         racketYBounds[3] = court.getHeight();
-        System.out.println(racketXBounds[0] + " " + racketXBounds[1]);
-        for (int i = 0; i < 4; i++) {
-            System.out.println(racketYBounds[i]);
-        }
         new AnimationTimer() {
             @Override
             public void handle(long now) {

@@ -10,7 +10,7 @@ JNIEXPORT jdoubleArray JNICALL Java_model_library_MyNativeLibrary_updateTrailVal
         values[i] += 0.1 * (values[i - 1] - values[i]);
     }
     values[0] += 0.1 * (value - values[0]);
-    
+
     (*env)->ReleaseDoubleArrayElements(env, trailsValues, values, 0);
     return trailsValues;
 }
@@ -64,36 +64,42 @@ JNIEXPORT jdoubleArray JNICALL Java_model_library_MyNativeLibrary_calculateParab
 
 JNIEXPORT jint JNICALL Java_model_library_MyNativeLibrary_divRoundAwayFromZero(JNIEnv *env, jobject obj, jdouble x, jdouble bound) {
     jint result;
-
     if (bound == 0) {
-        // مدیریت خطای تقسیم بر صفر
-        return 0; // یا  jniThrowException
+        // Handle division by zero error: If bound is zero, return 0 or throw exception
+        return 0; // Alternatively, throw an exception (e.g., jniThrowException)
     }
     __asm__ __volatile__ (
-        "movsd %1, %%xmm0\n\t"
-        "movsd %2, %%xmm1\n\t"
-        "divsd %%xmm1, %%xmm0\n\t"
-        "movapd %%xmm0, %%xmm2\n\t" // کپی xmm0 به xmm2
-        "movapd %%xmm0, %%xmm3\n\t" // کپی xmm0 به xmm3 برای استفاده مجدد
-        "xorpd %%xmm1, %%xmm1\n\t"
-        "comisd %%xmm0, %%xmm1\n\t"
-        "jb negative_case\n\t"
-        // حالت مثبت (گرد کردن به بالا)
-        "addsd %3, %%xmm0\n\t"
-        "cvttsd2siq %%xmm0, %%rax\n\t"
-        "movl %%eax, %0\n\t" // انتقال 32 بیتی به result
-        "jmp done\n\t"
+        "movsd %1, %%xmm0\n\t"   // Load x into xmm0 (move x to xmm0 register)
+        "movsd %2, %%xmm1\n\t"   // Load bound into xmm1 (move bound to xmm1 register)
+        "movsd %3, %%xmm2\n\t"
+
+        "xorpd %%xmm3, %%xmm3\n\t"  // Zero out xmm2 (set xmm2 to 0) using XOR operation (for comparison)
+        "comisd %%xmm0, %%xmm3\n\t" // Compare the result (xmm0) with zero (xmm2)
+        "ja negative_case\n\t"      // Jump to negative_case if the quotient is negative (below zero)
+
+        // Positive case: rounding away from zero (rounding up)
+        "subsd %%xmm2, %%xmm0\n\t"      // Subtract 1.0 from the quotient for rounding (rounding away from zero)
+        "divsd %%xmm1, %%xmm0\n\t"  // Divide the result  (optional based on logic, might be redundant)
+        "addsd %%xmm2, %%xmm0\n\t"      // Add 1.0 back to the quotient (final adjustment after division)
+        "cvttsd2siq %%xmm0, %%rax\n\t" // Convert Scalar Double-Precision Floating-Point to Signed Integer (truncating)
+        "movl %%eax, %0\n\t"        // Move the 32-bit integer result into output variable (result)
+        "jmp done\n\t"              // Jump to done (skip negative case)
+
         "negative_case:\n\t"
-        // حالت منفی (گرد کردن به پایین)
-        "subsd %3, %%xmm2\n\t"
-        "cvttsd2siq %%xmm2, %%rax\n\t"
-        "movl %%eax, %0\n\t" // انتقال 64 بیتی به result
-        "done:\n\t"
-        : "=r" (result)
-        : "x" (x), "x" (bound), "x" (0.5)
-        : "xmm0", "xmm1", "xmm2", "xmm3", "rax"
+        // Negative case: rounding away from zero (rounding down)
+        "addsd %%xmm2, %%xmm0\n\t"      // Add 1.0 to the quotient (for rounding)
+        "divsd %%xmm1, %%xmm0\n\t"  // Divide again (optional)
+        "subsd %%xmm2, %%xmm0\n\t"      // Subtract 1.0 from the quotient (final adjustment after division)
+        "cvttsd2siq %%xmm0, %%rax\n\t" // Convert the result to a signed integer
+        "movl %%eax, %0\n\t"        // Move the result into the output variable (result)
+
+        "done:\n\t" // Label marking the end of the assembly block (end of the calculation)
+
+        : "=r" (result)              // Output: store result in the 'result' variable
+        : "x" (x), "x" (bound), "x" (1.0) // Inputs: x, bound, and 1.0 for rounding (as a constant)
+        : "xmm0", "xmm1", "xmm2", "xmm3", "rax" // Clobbered registers: xmm0, xmm1, xmm2, xmm3, rax
     );
-    return (x < 0) ? (int)floor(x / bound) : (int)ceil(x / bound);
+    return result; // Return the final result to Java
 }
 
 
@@ -116,7 +122,7 @@ JNIEXPORT jint JNICALL Java_model_library_MyNativeLibrary_asmAbs(JNIEnv *env, jo
 JNIEXPORT jdouble JNICALL Java_model_library_MyNativeLibrary_sin(JNIEnv *env, jobject obj, jdouble time, jdouble a, jdouble b, jdouble c) {
     jdouble result;
     __asm__ volatile (
-        "fldl %4\n\t"        // st0 = c
+        "fldl %4\n\t"        // st0 = c FPU  *double-precision floating point
         "fldl %3\n\t"        // st0 = b, st1 = c
         "fldl %2\n\t"        // st0 = time, st1 = b, st2 = c
         "fmulp\n\t"          // st0 = b * time, st1 = c
@@ -140,7 +146,7 @@ JNIEXPORT jboolean JNICALL Java_model_library_MyNativeLibrary_isBetween(JNIEnv *
         "movsd %2, %%xmm1\n\t"    // Move q to xmm1
         "movsd %3, %%xmm2\n\t"    // Move r to xmm2
         "ucomisd %%xmm1, %%xmm0\n\t"  // Compare p with q
-        "setae %%al\n\t"          // Set AL if p >= q
+        "setae %%al\n\t"          // Set AL if p >= q  "Set if Above or Equal"
         "ucomisd %%xmm2, %%xmm0\n\t"  // Compare p with r
         "setbe %%cl\n\t"          // Set CL if p <= r
         "andb %%al, %%cl\n\t"     // Logical AND of conditions
