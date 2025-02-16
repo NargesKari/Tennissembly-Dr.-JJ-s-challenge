@@ -79,7 +79,6 @@ public class BallAnimation extends Transition {
 
         ball.setRotate(ball.getRotate() + myHypot(speedX, speedY));
         System.out.println("-");
-//        System.out.println("a: " + a + "b: " + b + "c: " + c);
         if (ball.getRadius() == courtWidth * 0.03) {
             if (ball.getBoundsInParent().intersects(racket1.getCollisionArea().getBoundsInParent())) racketHit(racket1);
             else if (ball.getBoundsInParent().intersects(racket2.getCollisionArea().getBoundsInParent()))
@@ -114,39 +113,38 @@ public class BallAnimation extends Transition {
                     }
                     time += (speedY * 0.001);
                 }
+                case 3 -> {
+                    double t = Math.abs(y - courtHeight / 2 - courtY) * 0.1;
+                    x = a == 1 ? Math.min((t * t), courtWidth) + courtX : courtX + Math.max(0, courtWidth - t * t);
+                    X.set(x);
+                }
             }
         }
     }
 
     void racketHit(Racket racket) {
-        speedX = movementMode != 2 ? a * (ball.getCenterX() - racket.getCollisionArea().getCenterX()) / 14 : 0;
+        speedX = (ball.getCenterX() - racket.getCollisionArea().getCenterX()) / 14;
         int bPrime = movementMode == -1 ? b : 1;
         speedY = (ball.getCenterY() < racket.getCollisionArea().getCenterY()) ? -bPrime * SPEEDY : bPrime * SPEEDY;
     }
 
     public void setArguments(int a, int b, int c) {
         time = 0;
-        this.a = divRoundAwayFromZero(a, 10.0);
+        this.a = a;
         this.b = b;
         this.c = c;
+    }
+
+    public void setSPEEDY(int speedy) {
+        SPEEDY = speedy;
     }
 
     public void setMode(int i) {
         if (i == 1) {
             step = 0;
             time = (ball.getCenterY() - (courtY + courtHeight / 2));
-            b = divRoundAwayFromZero(b, 3.0);
-            c *= 5;
         } else if (i == 2) {
             speedX = 0;
-            a *= 5;
-            b = divRoundAwayFromZero(b, 3.0) * 10;
-            c = divRoundAwayFromZero(c, 3.0);
-        } else {
-            a = asmAbs(a);
-            b = asmAbs(divRoundAwayFromZero(b, 5.0));
-            c = divRoundAwayFromZero(c, 3.0);
-            SPEEDY = c != 0 ? asmAbs(c) : 4;
         }
         movementMode = i;
     }

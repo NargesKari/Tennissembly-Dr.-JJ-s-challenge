@@ -1,86 +1,114 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
-    <HBox>
-        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="15.0" onMouseClicked="#information"
-                   pickOnBounds="true" preserveRatio="true">
-            <Image url="@../IMAGES/informationIcon.png">
-            </Image>
-        </ImageView>
-        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="15.0" onMouseClicked="#back"
-                   pickOnBounds="true" preserveRatio="true">
-            <Image url="@../IMAGES/backIcon.png">
-            </Image>
-        </ImageView>
-        <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="15.0" onMouseClicked="#changeMusicState"
-                   pickOnBounds="true" preserveRatio="true" fx:id="music"/>
-    </HBox>
-    <Rectangle fx:id="court" fill="green" height="493.0" stroke="white" strokeWidth="5.0" width="342.0"/>
-    <StackPane fx:id="scorePane" prefHeight="150.0" prefWidth="200.0">
-        <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../IMAGES/scoreBoard.png"/>
-        </ImageView>
-        <HBox alignment="CENTER" prefHeight="58.0" prefWidth="200.0" spacing="45">
-            <Label fx:id="score1Label" alignment="CENTER" prefHeight="38.0" prefWidth="40.0" text="Label">
-                <font>
-                    <Font name="Comic Sans MS Bold" size="20.0"/>
-                </font>
-            </Label>
-            <Label fx:id="score2Label" alignment="CENTER" prefHeight="38.0" prefWidth="40.0" text="Label">
-                <font>
-                    <Font name="Comic Sans MS Bold" size="20.0"/>
-                </font>
-            </Label>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.GameController">
+        <HBox>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="15.0" onMouseClicked="#information"
+                       pickOnBounds="true" preserveRatio="true">
+                <Image url="@../IMAGES/informationIcon.png">
+                </Image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="15.0" onMouseClicked="#back"
+                       pickOnBounds="true" preserveRatio="true">
+                <Image url="@../IMAGES/backIcon.png">
+                </Image>
+            </ImageView>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="15.0" onMouseClicked="#changeMusicState"
+                       pickOnBounds="true" preserveRatio="true" fx:id="music"/>
         </HBox>
-    </StackPane>
-    <StackPane fx:id="machinePane" prefHeight="156.0" prefWidth="177.0">
-        <ImageView fitHeight="300.0" fitWidth="300.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../IMAGES/machine1.png"/>
-        </ImageView>
-        <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="219.0" spacing="2">
-            <HBox alignment="TOP_CENTER" prefHeight="58.0" prefWidth="300.0">
-                <Label text="a:" textAlignment="CENTER">
+        <Rectangle fx:id="court" fill="green" height="493.0" stroke="white" strokeWidth="5.0" width="342.0"/>
+        <StackPane fx:id="scorePane" prefHeight="150.0" prefWidth="200.0">
+            <ImageView fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../IMAGES/scoreBoard.png"/>
+            </ImageView>
+            <HBox alignment="CENTER" prefHeight="58.0" prefWidth="200.0" spacing="45">
+                <Label fx:id="score1Label" alignment="CENTER" prefHeight="38.0" prefWidth="40.0" text="Label">
                     <font>
-                        <Font name="Comic Sans MS Bold" size="13.0"/>
+                        <Font name="Comic Sans MS Bold" size="20.0"/>
                     </font>
                 </Label>
-                <Spinner fx:id="a" prefHeight="25.0" prefWidth="55.0"/>
-
-                <Label text=" b:" textAlignment="CENTER">
+                <Label fx:id="score2Label" alignment="CENTER" prefHeight="38.0" prefWidth="40.0" text="Label">
                     <font>
-                        <Font name="Comic Sans MS Bold" size="13.0"/>
+                        <Font name="Comic Sans MS Bold" size="20.0"/>
                     </font>
                 </Label>
-                <Spinner fx:id="b" prefHeight="25.0" prefWidth="55.0"/>
-                <Label text=" c:" textAlignment="CENTER">
-                    <font>
-                        <Font name="Comic Sans MS Bold" size="13.0"/>
-                    </font>
-                </Label>
-                <Spinner fx:id="c" prefHeight="25.0" prefWidth="55.0"/>
             </HBox>
-            <ChoiceBox fx:id="choiceBox" prefHeight="10.0" prefWidth="120.0"
-                       style="-fx-background-color: black; -fx-text-fill: white;                        -fx-font-family: 'Comic Sans MS';-fx-font-size: 12pt;"/>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="69.0" onMouseClicked="#applyMovement"
-                       opacity="0.0" stroke="BLACK" strokeType="INSIDE" width="83.0"/>
+        </StackPane>
+
+        <StackPane fx:id="timerPane" prefHeight="140.0" prefWidth="200.0">
+            <ImageView fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
+                <Image url="@../IMAGES/timer.png"/>
+            </ImageView>
+            <Label fx:id="timerLabel" alignment="TOP_CENTER" prefHeight="38.0" prefWidth="100.0" text="00:00">
+                <font>
+                    <Font name="Comic Sans MS Bold" size="20.0"/>
+                </font>
+            </Label>
+        </StackPane>
+    <StackPane fx:id="modePane">
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#797980" height="421.0" opacity="0.6" stroke="TRANSPARENT" strokeType="INSIDE" width="200.0" />
+        <VBox alignment="CENTER" spacing="10" BorderPane.alignment="CENTER">
+
+            <Label alignment="CENTER" text="Simple" textAlignment="CENTER" textFill="00A87E">
+                <font>
+                    <Font name="Comic Sans MS" size="16.0" />
+                </font>
+                <effect>
+                    <DropShadow blurType="ONE_PASS_BOX" spread="0.88" />
+                </effect>
+            </Label>
+            <CheckBox fx:id="simple" text="simple" />
+            <Label alignment="CENTER" text="Sinus" textAlignment="CENTER" textFill="00A87E">
+                <font>
+                    <Font name="Comic Sans MS" size="16.0" />
+                </font>
+                <effect>
+                    <DropShadow blurType="ONE_PASS_BOX" spread="0.88" />
+                </effect>
+            </Label>
+            <VBox alignment="CENTER" spacing="10">
+                <CheckBox fx:id="sin1" text="mode 1" />
+                <CheckBox fx:id="sin2" text="mode 2" />
+                <CheckBox fx:id="sin3" text="mode 3" />
+            </VBox>
+            <Label alignment="CENTER" text="Parabola" textAlignment="CENTER" textFill="00A87E">
+                <font>
+                    <Font name="Comic Sans MS" size="16.0" />
+                </font>
+                <effect>
+                    <DropShadow blurType="ONE_PASS_BOX" spread="0.88" />
+                </effect>
+            </Label>
+            <VBox alignment="CENTER" spacing="10">
+                <CheckBox fx:id="parabola1" text="mode 1" />
+                <CheckBox fx:id="parabola2" text="mode 2" />
+                <CheckBox fx:id="parabola3" text="mode 3" />
+            </VBox>
+
+            <Label alignment="CENTER" text="Ball Speed" textAlignment="CENTER" textFill="#c5e21c">
+                <font>
+                    <Font name="Comic Sans MS" size="16.0" />
+                </font>
+                <effect>
+                    <DropShadow blurType="ONE_PASS_BOX" spread="0.88" />
+                </effect>
+            </Label>
+
+            <VBox alignment="CENTER" spacing="10">
+                <CheckBox fx:id="slow" text="slow    " />
+                <CheckBox fx:id="normal" text="normal" />
+                <CheckBox fx:id="fast" text="fast    " />
+            </VBox>
+
+
         </VBox>
-    </StackPane>
-    <StackPane fx:id="timerPane" prefHeight="140.0" prefWidth="200.0">
-        <ImageView fitHeight="120.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
-            <Image url="@../IMAGES/timer.png"/>
-        </ImageView>
-        <Label fx:id="timerLabel" alignment="TOP_CENTER" prefHeight="38.0" prefWidth="100.0" text="00:00">
-            <font>
-                <Font name="Comic Sans MS Bold" size="20.0"/>
-            </font>
-        </Label>
     </StackPane>
 
 

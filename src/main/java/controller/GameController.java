@@ -5,7 +5,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.*;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,6 +18,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 import model.Game;
 import model.GameItems.Ball;
@@ -23,8 +27,7 @@ import model.Music;
 import view.GameLauncher;
 import model.animations.ComputerPlayer;
 
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 import static model.library.MyNativeLibrary.isKeyPressed;
 
@@ -39,9 +42,20 @@ public class GameController {
     public Label score1Label;
     public Label score2Label;
     public Label timerLabel;
-    public StackPane machinePane;
     public StackPane timerPane;
     public ImageView music;
+    public CheckBox simple;
+    public CheckBox sin1;
+    public CheckBox sin2;
+    public CheckBox sin3;
+    public CheckBox parabola1;
+    public CheckBox parabola2;
+    public CheckBox parabola3;
+    public CheckBox slow;
+    public CheckBox normal;
+    public CheckBox fast;
+    public StackPane modePane;
+    List<CheckBox> movements;
     Ball ball;
     int secondsElapsed = 0;
     Timeline timeline;
@@ -59,8 +73,8 @@ public class GameController {
 
     public void setViewPage(GameLauncher viewPage) {
         this.viewPage = viewPage;// Bind ارتفاع زمین به ارتفاع پنل
-        machinePane.translateYProperty().bind(viewPage.getPane().heightProperty().multiply(0.5).subtract(85));
-        machinePane.translateXProperty().bind(viewPage.getPane().widthProperty().multiply(0.05));
+        modePane.translateYProperty().bind(viewPage.getPane().heightProperty().multiply(0.2));
+        modePane.translateXProperty().bind(viewPage.getPane().widthProperty().multiply(0.05));
         timerPane.translateYProperty().bind(viewPage.getPane().heightProperty().multiply(0.5).subtract(250));
         timerPane.translateXProperty().bind(viewPage.getPane().widthProperty().multiply(0.8));
         scorePane.translateYProperty().bind(viewPage.getPane().heightProperty().multiply(0.5).subtract(85));
@@ -87,6 +101,11 @@ public class GameController {
         racketYBounds[1] = -3 * racketYBounds[0];
         racketYBounds[2] = -racketYBounds[1] + court.getHeight();
         racketYBounds[3] = court.getHeight();
+
+        movements.forEach(box -> box.setOnAction(event -> applyMovement(box)));
+        slow.setOnAction(event -> applySpeed(slow, 2));
+        normal.setOnAction(event -> applySpeed(normal, 4));
+        fast.setOnAction(event -> applySpeed(fast, 6));
         new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -122,8 +141,6 @@ public class GameController {
         court.setStroke(Color.WHITE); // خطوط حاشیه
         court.setStrokeWidth(5); // ضخامت خطوط
         court.setFill(new ImagePattern(new Image(Objects.requireNonNull(getClass().getResource("/IMAGES/court.jpg")).toExternalForm())));
-        choiceBox.getItems().addAll("at^2 + bt + c", "a Sin(bt + c)", "aX + bY");
-        choiceBox.setValue("aX + bY");
         score1Label.textProperty().bind(scoreTop);
         score2Label.textProperty().bind(scoreBottom);
         timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
@@ -132,25 +149,55 @@ public class GameController {
             int seconds = secondsElapsed % 60;
             timerLabel.setText(String.format("%02d:%02d", minutes, seconds));
         }));
-        a.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-30, 30, 10));
-        a.getEditor().setStyle("-fx-background-color: black; -fx-text-fill: white;");
-        b.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-30, 30, 1));
-        b.getEditor().setStyle("-fx-background-color: black; -fx-text-fill: white;");
-        c.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(-30, 30, 0));
-        c.getEditor().setStyle("-fx-background-color: black; -fx-text-fill: white;");
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
         music.setImage(Music.getMusicStateImage());
+        movements = Arrays.asList(simple, sin1, sin2, sin3, parabola1, parabola2, parabola3);
+        movements.forEach(this::applyStyles);
+        applyStyles(slow);
+        applyStyles(normal);
+        applyStyles(fast);
+        simple.setSelected(true);
+        normal.setSelected(true);
+    }
+int speed = 4;
+    public void applySpeed(CheckBox selected, int speed) {
+        this.speed = speed;
+        ball.getAnimation().setSPEEDY(speed);
+        slow.setSelected(selected == slow);
+        normal.setSelected(selected == normal);
+        fast.setSelected(selected == fast);
     }
 
-    public void applyMovement(MouseEvent mouseEvent) {
-        ball.getAnimation().setArguments((Integer) a.getValue(),
-                (Integer) b.getValue(), (Integer) c.getValue());
-        switch (choiceBox.getValue().toString()) {
-            case "at^2 + bt + c" -> ball.getAnimation().setMode(1);
-            case "a Sin(bt + c)" -> ball.getAnimation().setMode(2);
-            case "aX + bY" -> ball.getAnimation().setMode(-1);
+    public EventHandler<ActionEvent> applyMovement(CheckBox selected) {
+        if (selected != null)
+            movements.forEach(box -> box.setSelected(selected == box));
+        for (int i = 0; i < 7; i++) {
+            if (movements.get(i).isSelected()) {
+                if (i == 0) {
+                    ball.getAnimation().setMode(-1);
+                } else if (i < 4) {
+                    ball.getAnimation().setMode(2);
+                    if (i == 1)
+                        ball.getAnimation().setArguments(5, 100, 0);
+                    else if (i == 2)
+                        ball.getAnimation().setArguments(10, 100, 0);
+                    else
+                        ball.getAnimation().setArguments(20, 70, 0);
+                } else if (i == 6) {
+                    ball.getAnimation().setArguments(-3, 0, 150);
+                    ball.getAnimation().setMode(1);
+                } else {
+                    ball.getAnimation().setMode(3);
+                    if (i==4)
+                        ball.getAnimation().setArguments(1, 0, 0);
+                    else
+                        ball.getAnimation().setArguments(0, 0, 0);
+                }
+                return null;
+            }
         }
+        return null;
     }
 
     public void information(MouseEvent mouseEvent) {
@@ -158,10 +205,6 @@ public class GameController {
                 (selectedMode == 1 ? "To move the top racket up, down, left, and right, use the W, S, A, and D keys, respectively.\n" : "")
                         + "To move the top racket bottom, down, left, and right, use the I, K, J, and L keys, respectively.\n"
                         + "Select a method from the options on the right.  \n" +
-                        "For the first two options, you can enter three custom integer values (a, b, c). However, the third option only requires a and b but if you add c, it has a permanent effect on **y**.\n" +
-                        "We recommend using (-10, 0, 30) for the first option, (30, 30, 30) for the second, and (10, 10, 12) for the last one.\n" +
-                        "To apply your selected changes, press the orange button.  \n" +
-                        "\n" +
                         "Also, pay attention to your racket, ball, and the point of impact.", ButtonType.OK);
         alert.setTitle("HELP");
         alert.setHeaderText("let me help you :)");
@@ -211,6 +254,7 @@ public class GameController {
             racket.setX(court.getX());
         }
         applyMovement(null);
+        ball.getAnimation().setSPEEDY(speed);
         ball.getAnimation().play();
         if (selectedMode == 2) {
             computerPlayer.setBall(ball);
@@ -249,6 +293,12 @@ public class GameController {
         if (result.isPresent() && result.get() == ButtonType.OK) {
             viewPage.back();
         }
+    }
+
+    private void applyStyles(CheckBox checkBox) {
+        checkBox.setFont(Font.font("Comic Sans MS", 12)); // تنظیم فونت
+        checkBox.setTextFill(Color.WHITE);
+        checkBox.setEffect(new DropShadow(10, Color.web("00A87E"))); // سایه
     }
 
     private void moveRacket() {
