@@ -51,3 +51,7 @@ To evaluate the effect of low-level optimization, the game was benchmarked in tw
 In all cases — especially with sinusoidal motion — the Assembly version showed **much higher frame rates** and **faster response times**, making it ideal for real-time gameplay.
 
 ---
+
+## Report
+
+You can find the detailed LaTeX report [here](https://latex.sharif.edu/read/vtfsgnvjhypd).
