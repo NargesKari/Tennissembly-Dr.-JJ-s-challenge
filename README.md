@@ -1,57 +1,23 @@
-# 🎾 Assembly-Powered Tennis Simulation Game
+# Tennissembly
 
-A high-performance simulation game built using **Java**, **C**, and **x86 Assembly**, where a striped colorful ball is launched toward a wall or goal using selectable projectile paths. The time-consuming trajectory computations are fully optimized with assembly code for maximum performance.
+A JavaFX tennis/badminton simulation where the ball's trajectory math runs as hand-written x86 assembly, called from Java through a JNI native library.
 
----
+## What it does
 
-## 🧠 Project Overview
+- Simulates a ball launched across the screen along one of three trajectories (linear, parabolic, sinusoidal), each with its own physics model.
+- The trajectory, rounding, clamping, and distance math (`calculateParabola`, `sin`, `myHypot`, `makeInBound`, `isBetween`, `divRoundAwayFromZero`) is implemented directly in x86 assembly inside `MyNative.c` and exposed to Java via JNI — `calculateParabola` in particular uses AVX (`vbroadcastsd`/`vmulpd` on YMM registers) to compute four trajectory samples in parallel instead of one call per frame.
+- JavaFX handles the GUI, animation loop, input, and an optional AI opponent; the assembly layer only ever does the numeric core.
 
-This project simulates a simple 2D ball-launching game inspired by tennis or badminton mechanics. The user can choose between three types of projectile trajectories, and the ball is launched accordingly from one side of the screen to the other.
+## Tech stack
 
-Unlike typical games, this one replaces the core computational logic (i.e., the motion equations and path calculations) with optimized **x86 Assembly code** using **FPU** (Floating-Point Unit) and optionally **SIMD** (Single Instruction, Multiple Data) instructions for significant performance gains.
+Java (JavaFX for UI/animation), C (JNI bridge), x86 inline assembly (FPU and AVX/SIMD instructions), Maven.
 
----
+## Getting started
 
-## 🧭 Selectable Trajectories
+The native library (`MyNative.dll`) is already built for Windows and checked into `src/main/java/model/library/`, so no separate C build step is needed to run the game. Open the project in an IDE with JavaFX support (or run via Maven with the JavaFX SDK on the module path) and run `view.Main`.
 
-- 🎯 **Linear Path**  
-- 🏹 **Convex / Parabolic Path**  
-- 🌊 **Sinusoidal Path**  
-
-Each path has its own physical model and is computed using optimized Assembly routines.
-
----
-
-## ⚙️ Technologies Used
-
-| Language | Purpose |
-|---------|---------|
-| **Java** | GUI, event handling, game logic |
-| **C**    | JNI (Java Native Interface) bridge between Java and Assembly |
-| **x86 Assembly** | High-performance trajectory and physics calculations |
-
----
-
-## 🚀 Key Features
-
-- ⚡ **Optimized trajectory calculations using x86 Assembly (FPU/SIMD)**
-- 🖱️ **Mouse-based input to control player responses and hit timing**
-- 🎨 **Rotating, colorful ball visuals with dynamic color changes during motion**
-- 🤖 **Optional AI opponent to simulate full matches**
-- 📊 **Performance comparison between high-level (Java/C) and low-level (Assembly) implementations**
-
----
-
-## 📈 Performance Analysis
-
-To evaluate the effect of low-level optimization, the game was benchmarked in two modes:
-- **High-level only (Java/C)**
-- **Assembly-optimized mode**
-
-In all cases — especially with sinusoidal motion — the Assembly version showed **much higher frame rates** and **faster response times**, making it ideal for real-time gameplay.
-
----
+If you change `MyNative.c`, recompile it into `MyNative.dll` (see `windowsCommands.txt` for the build commands used) before rerunning.
 
 ## Report
 
-You can find the detailed LaTeX report [here](https://latex.sharif.edu/read/vtfsgnvjhypd).
+Full write-up: [LaTeX report](https://latex.sharif.edu/read/vtfsgnvjhypd)
